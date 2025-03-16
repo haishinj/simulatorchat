@@ -7,61 +7,50 @@
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   
-  <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      color: #ff4d94;
-    }
-    .test-box {
-      background-color: #333;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 400px;
-    }
-    button {
-      background-color: #ff4d94;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background-color: #ff1a75;
-    }
-  </style>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>シミュレーターテスト</h1>
-  <div id="root"></div>
+<body class="bg-black text-white">
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center text-pink-500 mb-8">シミュレーターテスト</h1>
+    <div id="root"></div>
+  </div>
 
   <script type="text/babel">
-    // シンプルなReactコンポーネント
-    const SimpleCounter = () => {
+    // Tailwind CSSを使用したReactコンポーネント
+    const TailwindDemo = () => {
       const [count, setCount] = React.useState(0);
       
       return (
-        <div className="test-box">
-          <h2>Reactコンポーネントテスト</h2>
-          <p>現在のカウント: {count}</p>
-          <button onClick={() => setCount(count + 1)}>
-            カウントアップ
-          </button>
+        <div className="bg-gray-800 rounded-xl shadow-lg p-6 max-w-md mx-auto">
+          <h2 className="text-xl font-bold text-pink-400 mb-4">Tailwind + Reactテスト</h2>
+          
+          <div className="bg-gradient-to-r from-purple-900 to-pink-900 p-4 rounded-lg mb-4">
+            <p className="text-sm text-gray-300 mb-1">現在のカウント</p>
+            <p className="text-2xl font-bold">{count}</p>
+          </div>
+          
+          <div className="flex space-x-2">
+            <button 
+              className="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-lg flex-1"
+              onClick={() => setCount(count + 1)}
+            >
+              増加
+            </button>
+            <button 
+              className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg flex-1"
+              onClick={() => setCount(count - 1)}
+            >
+              減少
+            </button>
+          </div>
         </div>
       );
     };
     
     // Reactコンポーネントをレンダリング
     ReactDOM.render(
-      <SimpleCounter />,
+      <TailwindDemo />,
       document.getElementById('root')
     );
   </script>
