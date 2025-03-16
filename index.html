@@ -8,7 +8,7 @@
   <!-- React と関連ライブラリ -->
   <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+  <script crossorigin src="https://unpkg.com/recharts@2.10.3/umd/Recharts.js"></script>
   <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
   <!-- Tailwind CSS -->
@@ -19,7 +19,7 @@
 
   <script type="text/babel">
     const { useState, useEffect } = React;
-    const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = Recharts;
+    const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = window.Recharts;
 
     const ChatLadySimulator = () => {
       // 入力項目の状態管理
