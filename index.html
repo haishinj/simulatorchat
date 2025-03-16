@@ -2,13 +2,18 @@
 <html>
 <head>
   <title>チャットレディシミュレーター - テスト</title>
+  <!-- React と関連ライブラリ -->
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  
   <style>
     body {
       background-color: black;
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 50px;
+      padding: 20px;
     }
     h1 {
       color: #ff4d94;
@@ -36,17 +41,29 @@
 </head>
 <body>
   <h1>シミュレーターテスト</h1>
-  <div class="test-box">
-    <p>黒背景と簡単なスタイルのテスト成功!</p>
-    <p id="result">JavaScriptテスト: 準備完了</p>
-    <button id="testButton">ボタンをクリック</button>
-  </div>
+  <div id="root"></div>
 
-  <script>
-    // シンプルなJavaScriptテスト
-    document.getElementById('testButton').addEventListener('click', function() {
-      document.getElementById('result').textContent = 'JavaScriptテスト: 成功！';
-    });
+  <script type="text/babel">
+    // シンプルなReactコンポーネント
+    const SimpleCounter = () => {
+      const [count, setCount] = React.useState(0);
+      
+      return (
+        <div className="test-box">
+          <h2>Reactコンポーネントテスト</h2>
+          <p>現在のカウント: {count}</p>
+          <button onClick={() => setCount(count + 1)}>
+            カウントアップ
+          </button>
+        </div>
+      );
+    };
+    
+    // Reactコンポーネントをレンダリング
+    ReactDOM.render(
+      <SimpleCounter />,
+      document.getElementById('root')
+    );
   </script>
 </body>
 </html>
