@@ -569,4 +569,27 @@
                   </ul>
                   
                   {results.improvementPoints.length > 3 && (
-                    <p
+                    <p className="text-xs text-gray-500 mt-2 text-center">
+                      他{results.improvementPoints.length - 3}件のポイントがあります
+                    </p>
+                  )}
+                </div>
+              </div>
+              
+              <p className="text-xs text-gray-500 mt-4 italic text-center">
+                ※売上は個人差があります。マネージャーがあなたの成長をサポートします。
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // コンポーネントをレンダリング
+    ReactDOM.render(
+      <ChatLadySimulator />,
+      document.getElementById('root')
+    );
+  </script>
+</body>
+</html>
