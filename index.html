@@ -9,40 +9,146 @@
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    .progress-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: linear-gradient(to right, #ec4899, #8b5cf6);
+    }
+    .progress-container {
+      height: 8px;
+      border-radius: 4px;
+      background-color: #1f2937;
+    }
+  </style>
 </head>
 <body class="bg-black text-white">
   <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold text-center text-pink-500 mb-8">シミュレーターテスト</h1>
+    <h1 class="text-3xl font-bold text-center text-pink-500 mb-8">シミュレーター基本テスト</h1>
     <div id="root"></div>
   </div>
 
   <script type="text/babel">
-    // Tailwind CSSを使用したReactコンポーネント
-    const TailwindDemo = () => {
-      const [count, setCount] = React.useState(0);
+    const { useState, useEffect } = React;
+    
+    // スライダーと結果表示のテスト
+    const SimpleSalaryCalculator = () => {
+      const [inputs, setInputs] = useState({
+        workDays: 15,
+        hoursPerDay: 5,
+      });
+      
+      const [results, setResults] = useState({
+        monthlySalary: 0,
+        achievementRate: 0
+      });
+      
+      // 入力変更ハンドラー
+      const handleSliderChange = (e) => {
+        const { name, value } = e.target;
+        setInputs(prev => ({
+          ...prev,
+          [name]: parseInt(value, 10)
+        }));
+      };
+      
+      // 計算ロジック
+      useEffect(() => {
+        // 単純な計算式: 日数 × 時間 × 基本時給(3000円)
+        const monthlySalary = inputs.workDays * inputs.hoursPerDay * 3000;
+        const targetSalary = 300000; // 目標額30万円
+        const achievementRate = Math.min(Math.round((monthlySalary / targetSalary) * 100), 150);
+        
+        setResults({
+          monthlySalary,
+          achievementRate
+        });
+      }, [inputs]);
       
       return (
-        <div className="bg-gray-800 rounded-xl shadow-lg p-6 max-w-md mx-auto">
-          <h2 className="text-xl font-bold text-pink-400 mb-4">Tailwind + Reactテスト</h2>
-          
-          <div className="bg-gradient-to-r from-purple-900 to-pink-900 p-4 rounded-lg mb-4">
-            <p className="text-sm text-gray-300 mb-1">現在のカウント</p>
-            <p className="text-2xl font-bold">{count}</p>
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* 入力フォーム */}
+          <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800">
+            <h2 className="text-xl font-bold text-pink-400 mb-6">基本情報入力</h2>
+            
+            <div className="space-y-6">
+              <div className="flex flex-col">
+                <label className="text-gray-300 mb-1 text-sm font-medium">月間稼働日数</label>
+                <div className="flex items-center">
+                  <input
+                    type="range"
+                    name="workDays"
+                    value={inputs.workDays}
+                    onChange={handleSliderChange}
+                    className="flex-grow h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                    min="1"
+                    max="31"
+                  />
+                  <span className="ml-3 min-w-8 text-center font-bold">{inputs.workDays}日</span>
+                </div>
+              </div>
+              
+              <div className="flex flex-col">
+                <label className="text-gray-300 mb-1 text-sm font-medium">1日の平均稼働時間</label>
+                <div className="flex items-center">
+                  <input
+                    type="range"
+                    name="hoursPerDay"
+                    value={inputs.hoursPerDay}
+                    onChange={handleSliderChange}
+                    className="flex-grow h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                    min="1"
+                    max="12"
+                  />
+                  <span className="ml-3 min-w-8 text-center font-bold">{inputs.hoursPerDay}時間</span>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <div className="flex space-x-2">
-            <button 
-              className="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-lg flex-1"
-              onClick={() => setCount(count + 1)}
-            >
-              増加
-            </button>
-            <button 
-              className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg flex-1"
-              onClick={() => setCount(count - 1)}
-            >
-              減少
-            </button>
+          {/* 結果表示 */}
+          <div className="bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-800">
+            <h2 className="text-xl font-bold text-pink-400 mb-6">シミュレーション結果</h2>
+            
+            <div className="bg-gradient-to-r from-purple-900 to-pink-900 p-6 rounded-xl mb-6">
+              <h3 className="text-gray-400 text-sm font-medium mb-1">月収（手取り）</h3>
+              <p className="text-2xl font-bold text-white">
+                {(results.monthlySalary/10000).toFixed(1)}<span className="text-lg">万円</span>
+              </p>
+            </div>
+            
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-gray-300 text-sm font-medium">目標達成率</h3>
+                <span className={`text-sm font-bold px-2 py-1 rounded-full ${
+                  results.achievementRate >= 100 ? 'bg-green-900 text-green-300' : 
+                  results.achievementRate >= 70 ? 'bg-yellow-900 text-yellow-300' : 'bg-red-900 text-red-300'
+                }`}>
+                  {results.achievementRate}%
+                </span>
+              </div>
+              
+              <div className="progress-container">
+                <div 
+                  className="progress-bar"
+                  style={{ width: `${Math.min(results.achievementRate, 100)}%` }}
+                ></div>
+              </div>
+              
+              <div className="flex justify-between items-center mt-1">
+                <p className="text-xs text-gray-500">目標: 30万円</p>
+                <p className="text-xs text-gray-500">
+                  難易度: 
+                  <span className={`ml-1 ${
+                    results.achievementRate >= 100 ? 'text-green-400' : 
+                    results.achievementRate >= 70 ? 'text-yellow-400' : 'text-red-400'
+                  }`}>
+                    {results.achievementRate >= 100 ? '低' : results.achievementRate >= 70 ? '中' : '高'}
+                  </span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -50,7 +156,7 @@
     
     // Reactコンポーネントをレンダリング
     ReactDOM.render(
-      <TailwindDemo />,
+      <SimpleSalaryCalculator />,
       document.getElementById('root')
     );
   </script>
